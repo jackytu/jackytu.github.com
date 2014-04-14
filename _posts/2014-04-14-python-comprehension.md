@@ -2,7 +2,7 @@
 layout: post
 title: "python comprehension"
 description: ""
-category: 
+category: python
 tags: []
 ---
 {% include JB/setup %}
