@@ -1,7 +1,7 @@
 ---
 layout: page
-title: JackyTu!
-tagline: Supporting tagline
+title: JackyTu
+tagline: zhongying.tu@gmail.com
 ---
 {% include JB/setup %}
 
