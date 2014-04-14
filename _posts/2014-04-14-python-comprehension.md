@@ -2,8 +2,8 @@
 layout: post
 title: "python comprehension"
 description: ""
-category: "python"
-tags: []
+category: python
+tags: [python]
 ---
 {% include JB/setup %}
 
