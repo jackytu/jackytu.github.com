@@ -15,13 +15,16 @@ input = ['a', 'b', 'c']
 output = []  
 for s in input:  
     output.append(s.uppper())  
+
 ```  
+
 看上去没有什么问题，但如果你了解推导式，你可能会考虑的解决方案：
 
 
 ```python
 input = ['a', 'b', 'c']
 output = [s.uppper() for s in input]
+
 ```
 
 看到区别了吗，初始化不见了，append()也不见了，这就是简洁之美；
@@ -52,7 +55,7 @@ inbox = ''.join(map(lambda xx: hex(ord(i))[2:], os.urandom(16)))
 
 ```python
 inbox = ''.join([hex(ord(i))[2:] for i in os.urandom(16)])
-`
+```
 
 两种方式其实简洁程度上区别不大，但pep的风格建议中，更偏向于推导式，这样会减少函数的调用，效率也会更高；
 
