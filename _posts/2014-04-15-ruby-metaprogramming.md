@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "new post"
+title: "ruby metaprogramming"
 description: ""
 category: ruby
 tags: [ruby, metagramming]
