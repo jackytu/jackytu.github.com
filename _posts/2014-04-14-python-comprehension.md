@@ -10,19 +10,19 @@ tags: [python]
 ## 数组转换
 先考虑一类最基础的场景：给定一个数组，每个元素是小写字母，现在需要将每个元素转换为大写字母，你会如何处理？  
 你可以这样处理：  
-`
-    input = ['a', 'b', 'c']  
-    output = []  
-    for s in input:  
-         output.append(s.uppper())  
-`  
+```python
+input = ['a', 'b', 'c']  
+output = []  
+for s in input:  
+    output.append(s.uppper())  
+```  
 看上去没有什么问题，但如果你了解推导式，你可能会考虑的解决方案：
 
 
-`
-    input = ['a', 'b', 'c']
-    output = [s.uppper() for s in input]
-`
+```python
+input = ['a', 'b', 'c']
+output = [s.uppper() for s in input]
+```
 
 看到区别了吗，初始化不见了，append()也不见了，这就是简洁之美；
 
@@ -42,16 +42,16 @@ Python 列表推导式，是一种用于基于list的计算语法，简洁地将
 demo如下：
 
 
-`
-    inbox = ''.join(map(lambda xx: hex(ord(i))[2:], os.urandom(16)))
-`
+```python
+inbox = ''.join(map(lambda xx: hex(ord(i))[2:], os.urandom(16)))
+```
 
 
 通过推导式实现就是：
 
 
-`
-    inbox = ''.join([hex(ord(i))[2:] for i in os.urandom(16)])
+```python
+inbox = ''.join([hex(ord(i))[2:] for i in os.urandom(16)])
 `
 
 两种方式其实简洁程度上区别不大，但pep的风格建议中，更偏向于推导式，这样会减少函数的调用，效率也会更高；
