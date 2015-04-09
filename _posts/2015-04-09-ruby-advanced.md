@@ -159,7 +159,38 @@ puts obj.attr
 >>>
 1
 {% endhighlight %}
-### 1.5
+
+### 1.5 {instance,class}_{eval,exec}
+> _eval函数只能跟block，不能带参数，_exec函数则可以；
+{% highlight ruby %}
+# instance_eval无法传递变量
+@a = 1
+"cat".instance_eval do
+  puts @a
+end
+>>>
+#空
+
+# instance_exec可以传递变量
+@a = 1
+"cat".instance_exec(@a) do |b|
+   puts b
+end
+>>>
+1
+{% endhighlight %}
+> instance_{eval,exec}将生成`类方法`，class_{eval,exec}将生成实例方法；
+> TRICK: 利用instance_eval/instance_exec很容易实现DSL，可以不用定义receiver，因此，看上去可以非常简洁；
+> TRICK：但是在使用instance_eval时，需要注意实例变量的作用域;
+{% highlight ruby %}
+
+puts "self1 #{self}"
+"cat".instance_eval do
+  PUTS "self2 #{self}"
+end
+
+# 这里self1 != self2
+{% endhighlight %}
 
 
 
