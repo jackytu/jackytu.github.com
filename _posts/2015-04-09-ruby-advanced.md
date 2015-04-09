@@ -42,7 +42,7 @@ tags: [ruby]
 {% highlight ruby %} 
  > 这个例子可以像一般的实例属性操作一样，操作class-object的实例变量
  > class Cls  
- >   @var = 'old'  <!---->
+ >   @var = 'old' 
  >   class << self  
  >     attr_accessor :var  
  >   end  
@@ -51,6 +51,23 @@ tags: [ruby]
  > Cls.var = 'new'  
  > puts Cls.var  
 {% endhighlight %}
+
+### 1.3 可见性
+> TRICK: ruby的子类可以修改父类方法的权限
+{% highlight ruby %}  
+class A  
+  def a_method  
+    puts "parent"  
+  end  
+  private :a_method  
+end  
+class B<A  
+  public :a_method  
+end  
+b = B.new  
+b.a_method  
+{% endhighlight %}
+
 
 
 
