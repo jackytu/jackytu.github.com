@@ -1,8 +1,8 @@
 ---
-layout: post  
-title: "ruby"  
-description: "ruby programming advanced"  
-category: ruby  
+layout: post
+title: "ruby"
+description: "ruby programming advanced"
+category: ruby
 tags: [ruby]
 ---
 {% include JB/setup %}
@@ -11,86 +11,100 @@ tags: [ruby]
 ## (1) Metaprogramming
 ### 1.1 关于self
 > 1. ruby中每次方法调用都需要绑定到一个对象(receiver)；
-> 
+>
 > 2. 对于没有显示指定object的方法调用，例如 puts 'echo',ruby会将self置为当前的object，并从当前类开始搜索，直到BasicObject类；
-> 
+>
 > 3. Ruby程序运行的过程中，会不断改变self的值；
 
 ### 1.2 类方法(Notion)
 {% highlight ruby %}
- > example  
- > duck = "Donald Duck"  
- > M1.2.1  
- > def duck.speak  
- >   puts "I'm Donald"  
- > end  
- > duck.speak  
+#example
+duck = "Donald Duck"
+#M1.2.1
+def duck.speak
+  puts "I'm Donald"
+end
+duck.speak
+
+>>>
+I'm Donald
 {% endhighlight %}
 
- > 误区: 按照ruby的基本语义，duck.speak方法调用时，会将self设置为duck对象，再从String类开始搜寻speak方法，但显然String中没有speak方法，why?  
- 
- > NOTE: ruby并没有'类方法'概念,所有的方法均是实例方法！  
- 
- > M1.2.1 其实会自动创建一个匿名类，其祖先关系为: duck(object) < 匿名类 < String，这也是一个单例类，speak方法也成为单例方法，只能被新创建的匿名类调用，因此，这里的调用会先到匿名类中找speak方法，从而成功完成这次调用； 
-  
-{% highlight ruby %} 
- > singleton = class << "cat"; self; end  
- > singleton.new #这里将会报错，因为单例类不能实例化  
+ > 误区: 按照ruby的基本语义，duck.speak方法调用时，会将self设置为duck对象，再从String类开始搜寻speak方法，但显然String中没有speak方法，why?
+
+ > NOTE: ruby并没有'类方法'概念,所有的方法均是实例方法！
+
+ > M1.2.1 其实会自动创建一个匿名类，其祖先关系为: duck(object) < 匿名类 < String，这也是一个单例类，speak方法也成为单例方法，只能被新创建的匿名类调用，因此，这里的调用会先到匿名类中找speak方法，从而成功完成这次调用；
+
+{% highlight ruby %}
+ > singleton = class << "cat"; self; end
+ > singleton.new #这里将会报错，因为单例类不能实例化
 {% endhighlight %}
 
  > NOTE：attr_accessor访问class object的实例变量
-{% highlight ruby %} 
- > 这个例子可以像一般的实例属性操作一样，操作class-object的实例变量
- > class Cls  
- >   @var = 'old' 
- >   class << self  
- >     attr_accessor :var  
- >   end  
- > end  
- > puts Cls.var  
- > Cls.var = 'new'  
- > puts Cls.var  
+{% highlight ruby %}
+# 这个例子可以像一般的实例属性操作一样，操作class-object的实例变量
+class Cls
+  @var = 'old'
+  class << self
+    attr_accessor :var
+  end
+end
+puts Cls.var
+Cls.var = 'new'
+puts Cls.var
+
+>>>
+old
+new
 {% endhighlight %}
 
 ### 1.3 可见性
 > TRICK: ruby的子类可以修改父类方法的权限
-{% highlight ruby %}  
-class A  
-  def a_method  
-    puts "parent"  
-  end  
-  private :a_method  
-end  
-class B<A  
-  public :a_method  
-end  
-b = B.new  
-b.a_method  
+{% highlight ruby %}
+class A
+  def a_method
+    puts "parent"
+  end
+  private :a_method
+end
+class B<A
+  public :a_method
+end
+b = B.new
+b.a_method
+
+>>>>
+parent
 {% endhighlight %}
 
 ### 1.4 Mixin
-> NOTE1: 用include导入一个Module，Ruby将生成一个**匿名类**，插入到当前类与其父类之间；  
-> NOTE2: include导入的模块，**匿名类**会增加一个到Module的reference，也就是说只要模块发生变化，引用该模块的类的行为都会相应发生变化；  
-{% highlight ruby %}  
-module Mod  
-  def greeting  
-    "Hello"  
-  end  
-end  
+> NOTE1: 用include导入一个Module，Ruby将生成一个**匿名类**，插入到当前类与其父类之间；
+> NOTE2: include导入的模块，**匿名类**会增加一个到Module的reference，也就是说只要模块发生变化，引用该模块的类的行为都会相应发生变化；
+{% highlight ruby %}
+module Mod
+  def greeting
+    "Hello"
+  end
+end
 
-class Example  
-  include Mod  
-end  
+class Example
+  include Mod
+end
 
-ex = Example.new  
-puts "Before change, greeting is #{ex.greeting}"  
+ex = Example.new
+puts "Before change, greeting is #{ex.greeting}"
 
-module Mod  
-  def greeting  
-    "Hi"  
-  end  
-end  
-puts "After change, greeting is #{ex.greeting}"  
+module Mod
+  def greeting
+    "Hi"
+  end
+end
+puts "After change, greeting is #{ex.greeting}"
+
+>>>
+Before change, greeting is Hello
+After change, greeting is Hi
 {% endhighlight %}
 
 
