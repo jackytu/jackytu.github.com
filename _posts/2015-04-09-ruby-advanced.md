@@ -31,14 +31,12 @@ I'm Donald
 {% endhighlight %}
 
  > 误区: 按照ruby的基本语义，duck.speak方法调用时，会将self设置为duck对象，再从String类开始搜寻speak方法，但显然String中没有speak方法，why?
-
  > NOTE: ruby并没有'类方法'概念,所有的方法均是实例方法！
-
  > M1.2.1 其实会自动创建一个匿名类，其祖先关系为: duck(object) < 匿名类 < String，这也是一个单例类，speak方法也成为单例方法，只能被新创建的匿名类调用，因此，这里的调用会先到匿名类中找speak方法，从而成功完成这次调用；
 
 {% highlight ruby %}
- > singleton = class << "cat"; self; end
- > singleton.new #这里将会报错，因为单例类不能实例化
+singleton = class << "cat"; self; end
+singleton.new #这里将会报错，因为单例类不能实例化
 {% endhighlight %}
 
  > NOTE：attr_accessor访问class object的实例变量
@@ -57,6 +55,27 @@ puts Cls.var
 >>>
 old
 new
+{% endhighlight %}
+
+> NOTE: ruby中需要理解object的class与其object.class的class之间的关系与区别
+{% highlight ruby %}
+class Cls
+  def self.a_method
+    puts "hello"
+  end
+end
+
+obj = Cls.new
+# 这句代码将成功执行，因为ruby可以在其ancestors中Anno中找到a_method的定义；
+# 其祖先链为[Anno, Class, Module, Object, Kernel, BasicObject]
+Cls.a_method
+puts Cls.ancetors
+
+# 这句话将执行失败，因为a.class(Cls)的ancestors中找不到a_method的定义；
+# Cls的祖先链路为[Object, Kernel, BasicObject]
+a = Cls.new
+a.a_method
+
 {% endhighlight %}
 
 ### 1.3 可见性
@@ -107,7 +126,40 @@ Before change, greeting is Hello
 After change, greeting is Hi
 {% endhighlight %}
 
+>>> NOTE3: 如果需要在类中既mixin实例方法，又mixin类方法，可以使用self.included方法
+{% highlight ruby %}
+module Mod
+  def ins_method
+    puts "ins"
+  end
 
+  module ClsMethod
+    def attr_maker(attr)
+      attr_reader :attr
+      define_method("#{attr}=") do |val|
+        instance_val_set("@#{attr}", val)
+      end
+    end
+  end
+
+  def self.included(cls)
+    cls.extend(ClsMethod)
+  end
+end
+
+class Cls
+  include Mod
+  attr_maker :attr
+end
+
+obj = Cls.new
+obj.attr = 1
+puts obj.attr
+
+>>>
+1
+{% endhighlight %}
+### 1.5
 
 
 
