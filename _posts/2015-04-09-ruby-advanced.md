@@ -68,6 +68,31 @@ b = B.new
 b.a_method  
 {% endhighlight %}
 
+### 1.4 Mixin
+> NOTE1: 用include导入一个Module，Ruby将生成一个**匿名类**，插入到当前类与其父类之间；  
+> NOTE2: include导入的模块，**匿名类**会增加一个到Module的reference，也就是说只要模块发生变化，引用该模块的类的行为都会相应发生变化；  
+{% highlight ruby %}  
+module Mod  
+  def greeting  
+    "Hello"  
+  end  
+end  
+
+class Example  
+  include Mod  
+end  
+
+ex = Example.new  
+puts "Before change, greeting is #{ex.greeting}"  
+
+module Mod  
+  def greeting  
+    "Hi"  
+  end  
+end  
+puts "After change, greeting is #{ex.greeting}"  
+{% endhighlight %}
+
 
 
 
