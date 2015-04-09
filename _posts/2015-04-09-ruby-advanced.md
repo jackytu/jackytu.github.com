@@ -127,6 +127,8 @@ After change, greeting is Hi
 {% endhighlight %}
 
 >>> NOTE3: 如果需要在类中既mixin实例方法，又mixin类方法，可以使用self.included方法
+>>> NOTE4: 与self.included方法类似，Ruby定义了很多类似的hook，比如method_added，
+>>>        coerce, induced_from, 等等.
 {% highlight ruby %}
 module Mod
   def ins_method
@@ -192,6 +194,8 @@ end
 # 这里self1 != self2
 {% endhighlight %}
 
+### 1.6 其他
+>>> NOTE: ruby顶层文件的执行环境其实是Object，def一个method，其实是定义Object的instance_methods;
 
 
 
