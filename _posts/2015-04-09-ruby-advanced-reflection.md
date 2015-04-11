@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "ruby"
+title: "ruby programming advanced - reflection"
 description: "ruby programming advanced - reflection"
 category: ruby
 tags: [ruby, reflection]
