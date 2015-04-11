@@ -129,7 +129,25 @@ standard               0.000000   0.000000   0.000000 (  0.000006)
 > map的传入参数是一个block，如果本身不是proc，Ruby会自动调用to_proc方法
 > Ruby可以自动根据symbol转换为proc
 
-
+## 双分派模式(double dispatch)
+> coerce方法根据自己的类型，以及传入参数的class来决定到底生成什么对象；
+{% highlight ruby %}
+puts 1.coerce(2.0)
+puts (3.0).coerce(1)
+puts 1.coerce(2)
+>>>>>
+2.0
+1.0
+1.0
+3.0
+2
+1
+{% endhighlight %}
+## 语言特性
+> TRICK1:支持管道式编程
+{% highlight shell %}
+echo 'puts "Hello"' | ruby
+{% endhighlight %}
 
 
 
