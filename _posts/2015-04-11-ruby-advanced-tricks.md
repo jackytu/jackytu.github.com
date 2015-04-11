@@ -9,8 +9,8 @@ tags: [ruby, tricks]
 
 
 ## (1) Trace技巧
-> TRICK1: ruby2.0可以使用TracePoint来进行调用trace;
-> TRICK2: ruby1.9则可以使用caller方法
+>TRICK1: ruby2.0可以使用TracePoint来进行调用trace;
+>TRICK2: ruby1.9则可以使用caller方法
 {% highlight ruby %}
 def func_1
   puts "1"
@@ -81,3 +81,7 @@ puts "Sum is: #{obj.add(1, 2, 3)}"
 Sum is: 6
 {% endhighlight %}
 
+## (4) Ruby安全控制
+> NOTE1: Ruby通过$SAFE变量定义代码执行的安全等级；
+> NOTE2: Ruby可以通过Object#tainted?方法来判断对象是否已经被`污染`；
+> NOTE3: Ruby可以通过trusted?或者untrusted来判断对象是否信任；(ruby1.9+)
