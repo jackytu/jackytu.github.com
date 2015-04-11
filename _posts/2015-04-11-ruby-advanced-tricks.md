@@ -152,8 +152,59 @@ echo 'puts "Hello"' | ruby
 > TRICK3: Ruby1.9的正则表达式引擎：Oniguruma, 不是Perl的正则表达式引擎；Ruby2.0使用Onigmo引擎，为1.9的升级版本，在正则的一些模式上有所扩展，表达能力更强；
 > TRICK4: block是一段代码块，不是对象，需要绑定一个方法；Proc是一个对象，可以调用call方法；
 
+## 运行
+> TRICK1: Ruby提供大量的运行参数，-w, -e, -l等等，详细词典待补充；
+{% highlight shell %}
+-e: 执行命令
+-w：输入warning
+-d: debug
+-W: 设置warning级别
+-l: 导入路径
+-Tlevel: 设置安全级别
+-s: 设置外部变量ruby -s prog -opt=electric ./mydata
+-r: require外部库，在执行命令之前
+-i: 编辑文件：ruby -pi.bak -e "gsub(/Perl/, 'Ruby')" *.md5
+-n: 将代码放在循环中执行 # ruby2.0
+-p: 将代码放在循环中执行：# ruby2.0
+-c: 检查文件的语法错误
+##还有指定gem的命令行参数
+{% endhighlight %}
 
+## 文件处理
+{% highlight shell %}
+while line = gets
+  puts line.chomp.reverse
+end
+ruby -i.bak reverse.rb testfile otherfile
+>>>>>
+testfile.bak
+otherfile.bak
 
+##
+while line = gets
+  printf "%d: %10s[%d] %s", ARGF.lineno, ARGF.filename, ARGF.file.lineno, line
+end
+>>>>>ruby copy.rb testfile otherfile
+1:   testfile[1] This is line one
+2:   testfile[2] This is line two
+3:   testfile[3] This is line three
+4:   testfile[4] And so on...
+5:  otherfile[1] ANOTHER LINE ONE
+6:  otherfile[2] AND ANOTHER LINE TWO
+7:  otherfile[3] AND FINALLY THE LAST LINE
+{% endhighlight %}
+
+## rubygems
+{% highlight shell %}
+gem query --details --remote --name-matches builder
+gem list --details --remote --all builder
+gem install -t builder #先运行测试用例，测试是否能够在本地环境运行
+# 打开gem server，用于查询文档
+gem environment gemdir
+#cd 到安装目录
+gem server
+#访问localhost:8808
+{% endhighlight %}
 
 
 
