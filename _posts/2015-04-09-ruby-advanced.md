@@ -194,7 +194,82 @@ end
 # 这里self1 != self2
 {% endhighlight %}
 
-### 1.6 其他
+> TRICK：eval可以通过binding自定义上下文
+{% highlight ruby %}
+def context1
+  val = 'in_context1'
+  binding
+end
+
+def context2
+  val = 'in_context2'
+  eval("val; puts val", context1)
+end
+
+context2
+
+>>>>
+in_context1
+{% endhighlight %}
+
+### 1.6 method/send
+> method与send让动态方法调用成为可能;
+> method类似proc，或者C++中的指针,在需要的时候调用call即可;
+> 与method类似的有proc,lamdba等，可以实现动态调用；
+{% highlight ruby %}
+cat_sub = "cat".method(:sub)
+puts cat_sub.call('c', 'b')
+>>>>
+bat
+{% endhighlight %}
+
+> TRICK: method的动态绑定
+{% highlight ruby %}
+class A
+  def func
+    puts "IN A"
+  end
+end
+
+class B<A
+  def func
+    puts "IN B"
+  end
+end
+
+class C<B
+  def func
+    puts "IN C"
+  end
+end
+
+c = C.new
+# call func of C
+c.func
+# call func of B
+B.instance_method(:func).bind(c).call
+# call func of A
+A.instance_method(:func).bind(c).call
+>>>>
+IN C
+IN B
+IN A
+{% endhighlight %}
+### 1.7 其他
+> TRICK1: tap调试与简化代码
+{% highlight ruby %}
+# 在函数栈比较深的时候，可以用tap进行debug
+arr = (1...10).tap{|x| puts "x is #{x.inspect}"}
+  .to_a.tap{|x| puts "x is #{x.inspect}"}
+  .select{|x| x%2 == 0}.tap{|x| puts "x is #{x.inspect}"}
+
+puts arr
+>>>>>
+2
+4
+6
+8
+ {% endhighlight %}
 >>> NOTE: ruby顶层文件的执行环境其实是Object，def一个method，其实是定义Object的instance_methods;
 
 
