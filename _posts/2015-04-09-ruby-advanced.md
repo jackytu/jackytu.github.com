@@ -269,6 +269,22 @@ puts arr
 4
 6
 8
+
+# trace 系统命令的执行
+class Object
+  old_system_method = instance_method(:system)
+  define_method(:system) do |*args|
+    old_system_method.bind(self).call(*args).tap do |result|
+      puts "system(#{args.join(', ')}) returned #{result.inspect}"
+    end
+  end
+end
+
+system("date")
+
+>>>>
+2015年 4月11日 星期六 11时06分31秒 CST
+system(date) returned true
  {% endhighlight %}
 >>> NOTE: ruby顶层文件的执行环境其实是Object，def一个method，其实是定义Object的instance_methods;
 
