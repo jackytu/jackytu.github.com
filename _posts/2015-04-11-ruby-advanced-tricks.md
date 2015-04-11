@@ -85,3 +85,68 @@ Sum is: 6
 > NOTE1: Ruby通过$SAFE变量定义代码执行的安全等级；
 > NOTE2: Ruby可以通过Object#tainted?方法来判断对象是否已经被`污染`；
 > NOTE3: Ruby可以通过trusted?或者untrusted来判断对象是否信任；(ruby1.9+)
+
+## (5) 标准转换协议
+{% highlight ruby %}
+to_ary
+to_a
+to_enum
+to_hash
+to_int
+to_io
+to_open
+to_path
+to_proc
+to_regexp
+to_str
+to_sym
+{% endhighlight %}
+
+## (6) to_proc, coercise vs performance
+{% highlight ruby %}
+# performance better
+names = %w{ant bee cat}
+result = names.map {|name| name.upcase}
+
+# elegant better
+names = %w{ant bee cat}
+result = names.map(&:upcase)
+
+########
+require 'benchmark'
+Benchmark.bm(20) do |b|
+  b.report("coecrise") {['a', 'b'].map(&:upcase)}
+  b.report("standard") {['a', 'b'].map{|x| x.upcase} }
+end
+>>>>>>>
+ruby performance.rb
+                           user     system      total        real
+coecrise               0.000000   0.000000   0.000000 (  0.000011)
+standard               0.000000   0.000000   0.000000 (  0.000006)
+
+{% endhighlight %}
+
+> map的传入参数是一个block，如果本身不是proc，Ruby会自动调用to_proc方法
+> Ruby可以自动根据symbol转换为proc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
