@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "ruby"
+title: "ruby programming advanced - metagramming"
 description: "ruby programming advanced"
 category: ruby
 tags: [ruby]
