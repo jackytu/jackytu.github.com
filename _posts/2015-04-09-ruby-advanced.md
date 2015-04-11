@@ -288,5 +288,19 @@ system(date) returned true
  {% endhighlight %}
 >>> NOTE: ruby顶层文件的执行环境其实是Object，def一个method，其实是定义Object的instance_methods;
 
+## (2) Duck-Typing
+> Hint: Duck-Typing的关键是什么？
+  * 与其他强类型的语言不同，ruby的class并不是==对象的类型==;
+  * class更加强调object能够做什么，而不是object是什么；
+  * 经典谚语：`walk like a duck, then it's a duck`
+
+
+
+
+
+
+
+
+
 
 
