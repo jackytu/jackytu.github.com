@@ -144,12 +144,13 @@ puts 1.coerce(2)
 1
 {% endhighlight %}
 ## 语言特性
-> TRICK1:支持管道式编程
+> TRICK1: 支持管道式编程
 {% highlight shell %}
 echo 'puts "Hello"' | ruby
 {% endhighlight %}
-
-
+> TRICK2: Ruby中分为Integer与Bignumber两种表示数字的class，Integer表示范围受到计算机位数的限制，BigNum则受到机器内存的限制，两种可以自动转换；
+> TRICK3: Ruby1.9的正则表达式引擎：Oniguruma, 不是Perl的正则表达式引擎；Ruby2.0使用Onigmo引擎，为1.9的升级版本，在正则的一些模式上有所扩展，表达能力更强；
+> TRICK4: block是一段代码块，不是对象，需要绑定一个方法；Proc是一个对象，可以调用call方法；
 
 
 
