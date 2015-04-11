@@ -293,6 +293,7 @@ system(date) returned true
   * 与其他强类型的语言不同，ruby的class并不是==对象的类型==;
   * class更加强调object能够做什么，而不是object是什么；
   * 经典谚语：`walk like a duck, then it's a duck`
+  * duck-typing的好处可以让程序员省去大量校验类型的代码；
 
 
 
