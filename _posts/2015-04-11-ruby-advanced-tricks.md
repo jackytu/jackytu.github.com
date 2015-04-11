@@ -58,3 +58,26 @@ local table (size: 2, argc: 0 [opts: 0, rest: -1, post: 0, block: -1] s1)
 0015 leave
 {% endhighlight %}
 
+## (3) 分布式Ruby, drb
+{% highlight ruby %}
+#server.rb
+require 'drb'
+class TestServer
+  def add(*args)
+    args.inject {|n,v| n + v}
+  end
+end
+server = TestServer.new
+DRb.start_service('druby://localhost:9000', server)
+DRb.thread.join # Don't exit just yet!
+
+# client.rb
+require 'drb'
+DRb.start_service()
+obj = DRbObject.new(nil, 'druby://localhost:9000') # Now use obj
+puts "Sum is: #{obj.add(1, 2, 3)}"
+
+>>>> ruby client.rb
+Sum is: 6
+{% endhighlight %}
+
