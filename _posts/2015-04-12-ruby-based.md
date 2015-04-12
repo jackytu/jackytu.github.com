@@ -84,7 +84,29 @@ irb(main):004:0>
 {% endhighlight %}
 > irb可以通过.irbrc文件指定配置文件，配置提示符之类，也可以使用命令,help，irb_exit之类；
 > ruby的web，自带cgi模块，与模板语言erb,haml等
+## (5) debug
+{% highlight shell %}
+ruby -r debug debug.rb
+irb #jobs, fg, kill, exit
+{% endhighlight %}
 
+## (6) 性能分析
+{% highlight shell %}
+# NOTICE: ruby在进行garbage collection时将会使得程序运行很慢，benchmark可能误导测试结果；
+# 因此需要进行多次运行
+require 'benchmark'
+# profile本身会影响程序的性能，因此，只能通过profile的结果分析相对的结果；
+require 'profile'
+ruby -r profile line.rb
+{% endhighlight %}
+
+## (7) 单测
+> ruby中的minitest与test::unit相比，减少很多使用很少的特性，而且对应的方法都对应的映射；
+> 行为驱动开发，在写代码之前先写好测试用例，it 'xxxx';
+
+## (8) 多线程
+> ruby中线程是green 线程，在解释器实现切换；
+>
 
 
 
